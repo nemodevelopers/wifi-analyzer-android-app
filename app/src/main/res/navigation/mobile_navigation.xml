@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_wifi">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="ru.nemodev.wifi.analyzer.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_wifi"
+        android:name="ru.nemodev.wifi.analyzer.ui.wifi.WifiFragment"
+        android:label="@string/title_wifi"
+        tools:layout="@layout/fragment_wifi" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ru.nemodev.wifi.analyzer.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_device"
+        android:name="ru.nemodev.wifi.analyzer.ui.device.DeviceFragment"
+        android:label="@string/title_device"
+        tools:layout="@layout/fragment_device" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_speed"
         android:name="ru.nemodev.wifi.analyzer.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/title_speed"
+        tools:layout="@layout/fragment_speed" />
+
 </navigation>

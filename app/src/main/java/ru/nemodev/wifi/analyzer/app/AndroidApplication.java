@@ -27,5 +27,4 @@ public class AndroidApplication extends android.app.Application
     {
         return instance;
     }
-
 }
