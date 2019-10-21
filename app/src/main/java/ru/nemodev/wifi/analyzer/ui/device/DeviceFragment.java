@@ -25,12 +25,14 @@ public class DeviceFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_device, container, false);
 
         deviceInfoListView = root.findViewById(R.id.device_info_list);
-        deviceViewModel.getDeviceInfo().observe(this, deviceInfo -> {
+        deviceViewModel.getDeviceInfo(getContext()).observe(this, deviceInfo -> {
             ArrayList<String> deviceInfoList = new ArrayList<>();
             deviceInfoList.add("Device: " + deviceInfo.getDevice());
             deviceInfoList.add("Model: " + deviceInfo.getModel());
             deviceInfoList.add("Product: " + deviceInfo.getProduct());
             deviceInfoList.add("Version: " + deviceInfo.getVersion());
+            deviceInfoList.add("MAC: " + deviceInfo.getMac());
+            deviceInfoList.add("IP: " + deviceInfo.getIp());
 
             ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, deviceInfoList.toArray());
             deviceInfoListView.setAdapter(arrayAdapter);

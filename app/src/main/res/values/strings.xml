@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">wifi-analyzer</string>
+    <string name="app_name">Wi-Fi Analyzer</string>
     <string name="title_wifi">Wi-Fi</string>
     <string name="title_device">Устройство</string>
     <string name="title_speed">Скорость</string>
