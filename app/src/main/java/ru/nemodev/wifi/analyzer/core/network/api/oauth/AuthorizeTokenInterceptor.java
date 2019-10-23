@@ -1,4 +1,4 @@
-package ru.nemodev.wifi.analyzer.core.network.api;
+package ru.nemodev.wifi.analyzer.core.network.api.oauth;
 
 import java.io.IOException;
 
@@ -8,13 +8,13 @@ import okhttp3.Response;
 
 import static ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory.AUTORIZATION_HEADER;
 
-public class OAuthTokenInterceptor implements Interceptor {
+public class AuthorizeTokenInterceptor implements Interceptor {
 
     private static final String ACCESS_TOKEN_TYPE = "Bearer";
 
     private final String accessToken;
 
-    public OAuthTokenInterceptor(String accessToken) {
+    public AuthorizeTokenInterceptor(String accessToken) {
         this.accessToken = ACCESS_TOKEN_TYPE  + " " + accessToken;
     }
 
