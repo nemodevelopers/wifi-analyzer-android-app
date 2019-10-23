@@ -3,7 +3,6 @@
     android:id="@+id/rootLoginView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
@@ -33,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:textColor="@color/colorWhite"
                     android:hint="@string/login" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -48,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textColor="@color/colorWhite"
                     android:hint="@string/password"/>
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -3,7 +3,9 @@ package ru.nemodev.wifi.analyzer.ui.auth;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -24,7 +26,6 @@ import ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 import ru.nemodev.wifi.analyzer.ui.AppActivity;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
-import ru.nemodev.wifi.analyzer.utils.LogUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
             onLoginFailed();
             return;
         }
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
         loginBtn.setEnabled(false);
 
@@ -86,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.error(TAG, "Ошибка входа!", e);
+                        Log.e(TAG, "Ошибка входа!", e);
                         progressDialog.dismiss();
                         onLoginFailed();
                     }
