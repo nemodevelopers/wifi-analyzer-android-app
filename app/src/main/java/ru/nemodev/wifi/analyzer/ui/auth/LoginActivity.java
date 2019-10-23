@@ -3,7 +3,6 @@ package ru.nemodev.wifi.analyzer.ui.auth;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +24,11 @@ import ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 import ru.nemodev.wifi.analyzer.ui.AppActivity;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
+import ru.nemodev.wifi.analyzer.utils.LogUtils;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @BindView(R.id.rootLoginView) View rootLoginView;
     @BindView(R.id.login_input) EditText loginInput;
@@ -77,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(OAuthTokenDto oAuthTokenDto) {
-                        Log.d("123", oAuthTokenDto.getAccess_token());
                         RetrofitApiFactory.tokenDto = oAuthTokenDto;
                         progressDialog.dismiss();
                         onLoginSuccess();
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("123", e.getMessage());
+                        LogUtils.error(TAG, "Ошибка входа!", e);
                         progressDialog.dismiss();
                         onLoginFailed();
                     }

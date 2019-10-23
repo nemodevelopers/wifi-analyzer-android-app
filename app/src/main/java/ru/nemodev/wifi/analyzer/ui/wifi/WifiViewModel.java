@@ -1,6 +1,5 @@
 package ru.nemodev.wifi.analyzer.ui.wifi;
 
-import android.content.Context;
 import android.net.wifi.ScanResult;
 
 import androidx.lifecycle.LiveData;
@@ -12,26 +11,31 @@ import com.github.pwittchen.reactivewifi.ReactiveWifi;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
 import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiViewModel extends ViewModel {
 
-    private MutableLiveData<List<WifiAnalyzeInfo>> wifiScanResult;
+    private final MutableLiveData<List<WifiAnalyzeInfo>> wifiScanResult;
     private Disposable scanResultDisposable;
 
     public WifiViewModel() {
-        wifiScanResult = new MutableLiveData<>();
+        this.wifiScanResult = new MutableLiveData<>();
     }
 
-    public LiveData<List<WifiAnalyzeInfo>> getWifi(Context context) {
-        scanResultDisposable = ReactiveWifi.observeWifiAccessPoints(context)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(scanResults -> wifiScanResult.setValue(convertScanResults(scanResults)));
+    public void scanWifi() {
+        if (scanResultDisposable != null) {
+            scanResultDisposable.dispose();
+        }
 
+        scanResultDisposable = ReactiveWifi.observeWifiAccessPoints(AndroidApplication.getInstance())
+                .subscribeOn(Schedulers.io())
+                .subscribe(scanResults -> wifiScanResult.setValue(convertScanResults(scanResults)));
+    }
+
+    public LiveData<List<WifiAnalyzeInfo>> getScanResult() {
         return wifiScanResult;
     }
 
@@ -39,7 +43,7 @@ public class WifiViewModel extends ViewModel {
 
         List<WifiAnalyzeInfo> wifiAnalyzeInfoList = new ArrayList<>();
 
-        for(ScanResult scanResult: scanResults) {
+        for (ScanResult scanResult : scanResults) {
             WifiAnalyzeInfo wifiAnalyzeInfo = new WifiAnalyzeInfo(scanResult.SSID,
                     scanResult.BSSID,
                     scanResult.level,

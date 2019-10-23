@@ -13,7 +13,6 @@ public abstract class AuthorizeApiFactory<T> extends RetrofitApiFactory<T> {
         this.accessToken = accessToken;
     }
 
-
     @NonNull
     @Override
     protected OkHttpClient.Builder getHttpClientBuilder() {

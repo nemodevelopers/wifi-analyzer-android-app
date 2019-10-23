@@ -10,6 +10,7 @@ import ru.nemodev.wifi.analyzer.core.network.RetrofitApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.api.location.LocationApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.location.LocationDto;
 
+
 public class LocationService {
 
     public static final LocationService INSTANCE = new LocationService();
