@@ -8,21 +8,12 @@ import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiAnalyzeReport {
 
-    private Calendar creationDate;
     private DeviceInfo deviceInfo;
     private List<WifiAnalyzeInfo> wifiAnalyzeInfoList;
     private ReportLocation location;
     private String comment;
 
     public WifiAnalyzeReport() {
-    }
-
-    public Calendar getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Calendar creationDate) {
-        this.creationDate = creationDate;
     }
 
     public DeviceInfo getDeviceInfo() {

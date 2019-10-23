@@ -25,10 +25,6 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
 
     private List<WifiAnalyzeInfo> wifiAnalyzeInfoList;
 
-    private static final String BSSID_LABEL = "BSSID: ";
-    private static final String RSSI_LABEL = "RSSI: ";
-    private static final String FREQUENCY_LABEL = "FREQUENCY: ";
-
     public WifiRecyclerViewAdapter() {
         this.wifiAnalyzeInfoList = Collections.emptyList();
     }
@@ -51,9 +47,10 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
         WifiAnalyzeInfo wifiAnalyzeInfo = getItem(position);
 
         holder.ssid.setText(wifiAnalyzeInfo.getSSID());
-        holder.bssid.setText(makeOutputText(BSSID_LABEL, wifiAnalyzeInfo.getBSSID()));
-        holder.frequency.setText(makeOutputText(FREQUENCY_LABEL, String.valueOf(wifiAnalyzeInfo.getFrequency())));
-        holder.rssi.setText(makeOutputText(RSSI_LABEL, ""));
+        holder.bssid.setText(wifiAnalyzeInfo.getBSSID());
+
+        String frequency = wifiAnalyzeInfo.getFrequency() + " " + WifiConstants.FREQ_UNITS;
+        holder.frequency.setText(frequency);
 
         String rssiValue = wifiAnalyzeInfo.getRSSI() + " " + WifiConstants.RSSI_UNITS;
         holder.rssiChip.setText(rssiValue);
@@ -88,13 +85,7 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
             ssid = itemView.findViewById(R.id.ssid);
             bssid = itemView.findViewById(R.id.bssid);
             frequency = itemView.findViewById(R.id.freq);
-            rssi = itemView.findViewById(R.id.rssi);
             rssiChip = itemView.findViewById(R.id.rssi_chip);
         }
-    }
-
-    private Spanned makeOutputText(String label, String data) {
-        String text = "<b>" + label + "</b> " + data;
-        return Html.fromHtml(text);
     }
 }

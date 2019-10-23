@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +24,10 @@ import io.reactivex.disposables.Disposable;
 import ru.nemodev.wifi.analyzer.R;
 import ru.nemodev.wifi.analyzer.core.entity.location.Location;
 import ru.nemodev.wifi.analyzer.core.service.location.LocationService;
+import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
+import ru.nemodev.wifi.analyzer.core.report.ReportLocation;
+import ru.nemodev.wifi.analyzer.core.report.WifiAnalyzeReport;
+import ru.nemodev.wifi.analyzer.core.network.api.report.WifiAnalyzeReportService;
 
 public class WifiFragment extends Fragment {
 
@@ -102,6 +107,18 @@ public class WifiFragment extends Fragment {
 
     private void sendWifiReport() {
 
+        if (adapter.getItemCount() > 0) {
+            WifiAnalyzeReport report = new WifiAnalyzeReport();
+
+            report.setWifiAnalyzeInfoList(adapter.getItems());
+            report.setDeviceInfo(DeviceManager.getDeviceInfo(getContext()));
+            report.setComment("test");
+            report.setLocation(new ReportLocation("1862950d-dae2-4084-94dc-76da15a6a6ad", "test"));
+
+            WifiAnalyzeReportService.getInstance(getContext()).sendReport(report);
+        } else {
+            Toast.makeText(getContext(), "В отчете нет данных о Wi-Fi сетях!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initRecyclerView(View root) {

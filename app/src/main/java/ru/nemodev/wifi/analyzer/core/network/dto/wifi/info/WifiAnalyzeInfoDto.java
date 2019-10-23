@@ -4,8 +4,6 @@ package ru.nemodev.wifi.analyzer.core.network.dto.wifi.info;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDateTime;
-
 import ru.nemodev.wifi.analyzer.core.network.dto.BaseEntityDto;
 import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
@@ -13,7 +11,7 @@ public class WifiAnalyzeInfoDto extends BaseEntityDto {
 
     @SerializedName("creationDate")
     @Expose
-    private LocalDateTime creationDate;
+    private String creationDate;
 
     @SerializedName("ssid")
     @Expose
@@ -38,11 +36,11 @@ public class WifiAnalyzeInfoDto extends BaseEntityDto {
     public WifiAnalyzeInfoDto() {
     }
 
-    public LocalDateTime getCreationDate() {
+    public String  getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

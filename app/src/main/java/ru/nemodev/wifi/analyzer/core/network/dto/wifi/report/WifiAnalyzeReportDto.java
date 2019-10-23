@@ -3,7 +3,6 @@ package ru.nemodev.wifi.analyzer.core.network.dto.wifi.report;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class WifiAnalyzeReportDto extends BaseEntityDto {
 
     @SerializedName("creationDate")
     @Expose
-    private LocalDateTime creationDate;
+    private String creationDate;
 
     @SerializedName("comment")
     @Expose
@@ -44,11 +43,11 @@ public class WifiAnalyzeReportDto extends BaseEntityDto {
     public WifiAnalyzeReportDto() {
     }
 
-    public LocalDateTime getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -94,16 +93,15 @@ public class WifiAnalyzeReportDto extends BaseEntityDto {
 
     public static WifiAnalyzeReportDto fromEntity(WifiAnalyzeReport wifiAnalyzeReport) {
         WifiAnalyzeReportDto wifiAnalyzeReportDto = new WifiAnalyzeReportDto();
-        wifiAnalyzeReportDto.setCreationDate(null);
+
         wifiAnalyzeReportDto.setComment(wifiAnalyzeReport.getComment());
         wifiAnalyzeReportDto.setOwnerUser(null);
         wifiAnalyzeReportDto.setLocation(LocationDto.fromEntity(wifiAnalyzeReport.getLocation()));
         wifiAnalyzeReportDto.setDeviceInfo(DeviceInfoDto.fromEntity(wifiAnalyzeReport.getDeviceInfo()));
 
-        List<WifiAnalyzeInfo> wifiAnalyzeInfoList = wifiAnalyzeReport.getWifiAnalyzeInfoList();
         List<WifiAnalyzeInfoDto> wifiAnalyzeInfoDtoList = new ArrayList<>();
 
-        for(WifiAnalyzeInfo wifiAnalyzeInfo: wifiAnalyzeInfoList) {
+        for(WifiAnalyzeInfo wifiAnalyzeInfo: wifiAnalyzeReport.getWifiAnalyzeInfoList()) {
             wifiAnalyzeInfoDtoList.add(WifiAnalyzeInfoDto.fromEntity(wifiAnalyzeInfo));
         }
 

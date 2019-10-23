@@ -26,6 +26,7 @@ public class LocationDto extends BaseEntityDto {
 
     public static LocationDto fromEntity(ReportLocation reportLocation) {
         LocationDto locationDto = new LocationDto();
+        locationDto.setId(reportLocation.getId());
         locationDto.setName(reportLocation.getName());
 
         return locationDto;
