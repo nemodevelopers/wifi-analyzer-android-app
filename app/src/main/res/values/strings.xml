@@ -3,4 +3,11 @@
     <string name="title_wifi">Wi-Fi</string>
     <string name="title_device">Устройство</string>
     <string name="title_speed">Скорость</string>
+
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+
+    <string name="scan">Сканировать</string>
+    <string name="send">Отправить</string>
 </resources>

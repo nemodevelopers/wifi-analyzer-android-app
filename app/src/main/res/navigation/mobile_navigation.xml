@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_speed"
-        android:name="ru.nemodev.wifi.analyzer.ui.notifications.NotificationsFragment"
+        android:name="ru.nemodev.wifi.analyzer.ui.speed.SpeedFragment"
         android:label="@string/title_speed"
         tools:layout="@layout/fragment_speed" />
 

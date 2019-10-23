@@ -29,7 +29,7 @@ public class DeviceFragment extends Fragment {
             ArrayList<String> deviceInfoList = new ArrayList<>();
             deviceInfoList.add("Device: " + deviceInfo.getDevice());
             deviceInfoList.add("Model: " + deviceInfo.getModel());
-            deviceInfoList.add("Product: " + deviceInfo.getProduct());
+            deviceInfoList.add("Release: " + deviceInfo.getRelease());
             deviceInfoList.add("Version: " + deviceInfo.getVersion());
             deviceInfoList.add("MAC: " + deviceInfo.getMac());
             deviceInfoList.add("IP: " + deviceInfo.getIp());

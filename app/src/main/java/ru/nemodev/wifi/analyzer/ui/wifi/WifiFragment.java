@@ -1,33 +1,35 @@
 package ru.nemodev.wifi.analyzer.ui.wifi;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import ru.nemodev.wifi.analyzer.R;
 
 public class WifiFragment extends Fragment {
 
     private WifiViewModel wifiViewModel;
-    private ListView wifiInfoList;
-    private ProgressBar progressBar;
+    private RecyclerView wifiInfoList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         wifiViewModel = ViewModelProviders.of(this).get(WifiViewModel.class);
         View root = inflater.inflate(R.layout.fragment_wifi, container, false);
 
         wifiInfoList = root.findViewById(R.id.wifi_info_list);
-        progressBar = root.findViewById(R.id.progressbar);
+        wifiInfoList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        wifiInfoList.setLayoutManager(llm);
 
         Button scanBtn = root.findViewById(R.id.scan_btn);
         scanBtn.setOnClickListener(v -> getWifi());
@@ -53,12 +55,19 @@ public class WifiFragment extends Fragment {
     }
 
     private void getWifi() {
-        progressBar.setVisibility(View.VISIBLE);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Сканирование...");
+        progressDialog.show();
 
         wifiViewModel.getWifi(getContext()).observe(this, wifiDataList -> {
-            progressBar.setVisibility(View.GONE);
-            WifiListAdapter wifiListAdapter = new WifiListAdapter(getContext(), wifiDataList);
-            wifiInfoList.setAdapter(wifiListAdapter);
+
+            WifiRecyclerViewAdapter adapter = new WifiRecyclerViewAdapter(wifiDataList);
+            wifiInfoList.setAdapter(adapter);
+
+            progressDialog.dismiss();
         });
     }
 }

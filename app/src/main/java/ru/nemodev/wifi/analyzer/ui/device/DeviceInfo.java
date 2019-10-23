@@ -4,15 +4,15 @@ public class DeviceInfo {
     private String device;
     private String model;
     private String version;
-    private String product;
+    private String release;
     private String mac;
     private String ip;
 
-    public DeviceInfo(String device, String model, String version, String product, String mac, String ip) {
+    public DeviceInfo(String device, String model, String version, String release, String mac, String ip) {
         this.device = device;
         this.model = model;
         this.version = version;
-        this.product = product;
+        this.release = release;
         this.mac = mac;
         this.ip = ip;
     }
@@ -41,12 +41,12 @@ public class DeviceInfo {
         this.version = version;
     }
 
-    public String getProduct() {
-        return product;
+    public String getRelease() {
+        return release;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setRelease(String release) {
+        this.release = release;
     }
 
     public String getMac() {

@@ -1,10 +1,34 @@
 package ru.nemodev.wifi.analyzer.ui.wifi;
 
+/**
+ * Данные о Wi-Fi соединении
+ */
 public class WifiData {
+
+    /**
+     * Имя сети
+     * Service set identifier
+     */
     private String SSID;
+
+    /**
+     * Mac-адрес сетевого адаптера
+     * Basic serviсe set id
+     */
     private String BSSID;
+
+    /**
+     * Показатель уровня принимаемого сигнала
+     * Received signal strength indicator
+     */
     private int RSSI;
+
+    /**
+     * Частота канала
+     */
     private int frequency;
+
+    private RssiLevel rssiLevel;
 
     public WifiData() {
     }
@@ -14,6 +38,8 @@ public class WifiData {
         this.BSSID = BSSID;
         this.RSSI = RSSI;
         this.frequency = frequency;
+
+        this.rssiLevel = RssiLevel.defineRssiLevel(RSSI);
     }
 
     public String getSSID() {
@@ -46,5 +72,13 @@ public class WifiData {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public RssiLevel getRssiLevel() {
+        return rssiLevel;
+    }
+
+    public void setRssiLevel(RssiLevel rssiLevel) {
+        this.rssiLevel = rssiLevel;
     }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/wifi_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            
+            <TextView
+                android:id="@+id/ssid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorBlack"
+                android:text="SSID:"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/bssid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorGrey"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingStart="8dp"
+                android:text="BSSID:"
+                android:layout_below="@id/ssid"/>
+
+            <TextView
+                android:id="@+id/freq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorGrey"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingStart="8dp"
+                android:text="FREQUENCY:"
+                android:layout_below="@id/bssid"/>
+
+            <TextView
+                android:id="@+id/rssi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorGrey"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingStart="8dp"
+                android:text="RSSI:"
+                android:layout_below="@id/freq"/>
+
+            <com.robertlevonyan.views.chip.Chip
+                android:id="@+id/rssi_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/rssi"
+                android:layout_below="@id/freq"
+                android:layout_marginLeft="8dp"
+                android:text="@string/title_speed"
+                app:mcv_textColor="@color/colorWhite"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

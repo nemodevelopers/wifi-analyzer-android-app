@@ -39,10 +39,15 @@ public class WifiViewModel extends ViewModel {
         List<WifiData> wifiDataList = new ArrayList<>();
 
         for(ScanResult scanResult: scanResults) {
-            WifiData wifiData = new WifiData(scanResult.SSID, scanResult.BSSID, scanResult.level, scanResult.frequency);
+            WifiData wifiData = new WifiData(scanResult.SSID,
+                    scanResult.BSSID,
+                    scanResult.level,
+                    scanResult.frequency);
+
             wifiDataList.add(wifiData);
         }
 
+        // TODO как правильно отписаться
         scanResultDisposable.dispose();
 
         return wifiDataList;
