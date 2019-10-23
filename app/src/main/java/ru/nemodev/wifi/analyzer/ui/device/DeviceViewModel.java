@@ -26,7 +26,7 @@ public class DeviceViewModel extends ViewModel {
 
         if (wifiStatusDisposable == null) {
             wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
-                    .filter(wifiState -> wifiState == WifiState.ENABLED || wifiState == WifiState.ENABLING)
+                    .filter(wifiState -> wifiState == WifiState.ENABLED)
                     .subscribeOn(Schedulers.io())
                     .subscribe(wifiState -> refreshDeviceInfo());
         }
