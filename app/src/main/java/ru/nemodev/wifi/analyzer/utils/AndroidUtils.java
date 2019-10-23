@@ -1,13 +1,9 @@
 package ru.nemodev.wifi.analyzer.utils;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -18,8 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Arrays;
 import java.util.List;
 
-import ru.nemodev.wifi.analyzer.R;
-import ru.nemodev.wifi.analyzer.app.AndroidApplication;
+import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
 
 
 public final class AndroidUtils

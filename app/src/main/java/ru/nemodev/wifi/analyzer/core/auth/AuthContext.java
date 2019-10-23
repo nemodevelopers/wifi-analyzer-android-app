@@ -1,4 +1,4 @@
-package ru.nemodev.wifi.analyzer.ui.auth;
+package ru.nemodev.wifi.analyzer.core.auth;
 
 
 public class AuthContext {

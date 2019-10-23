@@ -1,12 +1,10 @@
-package ru.nemodev.wifi.analyzer.utils;
+package ru.nemodev.wifi.analyzer.core.device;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.format.Formatter;
-
-import ru.nemodev.wifi.analyzer.ui.device.DeviceInfo;
 
 public class DeviceManager
 {

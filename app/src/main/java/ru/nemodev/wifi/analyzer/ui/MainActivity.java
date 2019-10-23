@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.nemodev.wifi.analyzer.ui.auth.LoginActivity;
-import ru.nemodev.wifi.analyzer.ui.auth.AuthContext;
+import ru.nemodev.wifi.analyzer.core.auth.AuthContext;
 
 public class MainActivity extends AppCompatActivity {
 

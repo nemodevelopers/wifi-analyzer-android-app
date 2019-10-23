@@ -15,17 +15,18 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiViewModel extends ViewModel {
 
-    private MutableLiveData<List<WifiData>> wifiScanResult;
+    private MutableLiveData<List<WifiAnalyzeInfo>> wifiScanResult;
     private Disposable scanResultDisposable;
 
     public WifiViewModel() {
         wifiScanResult = new MutableLiveData<>();
     }
 
-    public LiveData<List<WifiData>> getWifi(Context context) {
+    public LiveData<List<WifiAnalyzeInfo>> getWifi(Context context) {
         scanResultDisposable = ReactiveWifi.observeWifiAccessPoints(context)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,22 +35,22 @@ public class WifiViewModel extends ViewModel {
         return wifiScanResult;
     }
 
-    private List<WifiData> convertScanResults(List<ScanResult> scanResults) {
+    private List<WifiAnalyzeInfo> convertScanResults(List<ScanResult> scanResults) {
 
-        List<WifiData> wifiDataList = new ArrayList<>();
+        List<WifiAnalyzeInfo> wifiAnalyzeInfoList = new ArrayList<>();
 
         for(ScanResult scanResult: scanResults) {
-            WifiData wifiData = new WifiData(scanResult.SSID,
+            WifiAnalyzeInfo wifiAnalyzeInfo = new WifiAnalyzeInfo(scanResult.SSID,
                     scanResult.BSSID,
                     scanResult.level,
                     scanResult.frequency);
 
-            wifiDataList.add(wifiData);
+            wifiAnalyzeInfoList.add(wifiAnalyzeInfo);
         }
 
         // TODO как правильно отписаться
         scanResultDisposable.dispose();
 
-        return wifiDataList;
+        return wifiAnalyzeInfoList;
     }
 }

@@ -1,4 +1,4 @@
-package ru.nemodev.wifi.analyzer.app;
+package ru.nemodev.wifi.analyzer.core.app;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -15,7 +15,7 @@ public class AndroidApplication extends android.app.Application
         super.onCreate();
         instance = this;
 
-        initFabricIO();
+        //initFabricIO();
     }
 
     private void initFabricIO()

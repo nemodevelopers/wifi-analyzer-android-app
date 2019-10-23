@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import ru.nemodev.wifi.analyzer.utils.DeviceManager;
+import ru.nemodev.wifi.analyzer.core.device.DeviceInfo;
+import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
 
 public class DeviceViewModel extends ViewModel {
 

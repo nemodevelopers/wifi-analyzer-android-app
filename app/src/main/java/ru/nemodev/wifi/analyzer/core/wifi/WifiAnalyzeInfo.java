@@ -1,9 +1,9 @@
-package ru.nemodev.wifi.analyzer.ui.wifi;
+package ru.nemodev.wifi.analyzer.core.wifi;
 
 /**
  * Данные о Wi-Fi соединении
  */
-public class WifiData {
+public class WifiAnalyzeInfo {
 
     /**
      * Имя сети
@@ -30,10 +30,10 @@ public class WifiData {
 
     private RssiLevel rssiLevel;
 
-    public WifiData() {
+    public WifiAnalyzeInfo() {
     }
 
-    public WifiData(String SSID, String BSSID, int RSSI, int frequency) {
+    public WifiAnalyzeInfo(String SSID, String BSSID, int RSSI, int frequency) {
         this.SSID = SSID;
         this.BSSID = BSSID;
         this.RSSI = RSSI;

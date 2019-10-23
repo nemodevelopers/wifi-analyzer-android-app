@@ -1,4 +1,4 @@
-package ru.nemodev.wifi.analyzer.ui.device;
+package ru.nemodev.wifi.analyzer.core.device;
 
 public class DeviceInfo {
     private String device;

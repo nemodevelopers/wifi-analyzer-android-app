@@ -1,4 +1,4 @@
-package ru.nemodev.wifi.analyzer.ui.wifi;
+package ru.nemodev.wifi.analyzer.core.wifi;
 
 import android.util.Range;
 

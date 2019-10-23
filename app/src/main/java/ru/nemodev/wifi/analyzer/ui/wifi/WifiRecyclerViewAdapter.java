@@ -1,6 +1,5 @@
 package ru.nemodev.wifi.analyzer.ui.wifi;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
 import android.text.Spanned;
@@ -15,20 +14,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.robertlevonyan.views.chip.Chip;
 
+import java.util.Collections;
 import java.util.List;
 
 import ru.nemodev.wifi.analyzer.R;
+import ru.nemodev.wifi.analyzer.core.wifi.WifiConstants;
+import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerViewAdapter.WifiViewHolder> {
 
-    private List<WifiData> wifiDataList;
+    private List<WifiAnalyzeInfo> wifiAnalyzeInfoList;
 
     private static final String BSSID_LABEL = "BSSID: ";
     private static final String RSSI_LABEL = "RSSI: ";
     private static final String FREQUENCY_LABEL = "FREQUENCY: ";
 
-    public WifiRecyclerViewAdapter(List<WifiData> wifiDataList) {
-        this.wifiDataList = wifiDataList;
+    public WifiRecyclerViewAdapter() {
+        this.wifiAnalyzeInfoList = Collections.emptyList();
+    }
+
+    public WifiRecyclerViewAdapter(List<WifiAnalyzeInfo> wifiAnalyzeInfoList) {
+        this.wifiAnalyzeInfoList = wifiAnalyzeInfoList;
     }
 
     @NonNull
@@ -42,25 +48,29 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull WifiViewHolder holder, int position) {
 
-        WifiData wifiData = getItem(position);
+        WifiAnalyzeInfo wifiAnalyzeInfo = getItem(position);
 
-        holder.ssid.setText(wifiData.getSSID());
-        holder.bssid.setText(makeOutputText(BSSID_LABEL, wifiData.getBSSID()));
-        holder.frequency.setText(makeOutputText(FREQUENCY_LABEL, String.valueOf(wifiData.getFrequency())));
+        holder.ssid.setText(wifiAnalyzeInfo.getSSID());
+        holder.bssid.setText(makeOutputText(BSSID_LABEL, wifiAnalyzeInfo.getBSSID()));
+        holder.frequency.setText(makeOutputText(FREQUENCY_LABEL, String.valueOf(wifiAnalyzeInfo.getFrequency())));
         holder.rssi.setText(makeOutputText(RSSI_LABEL, ""));
 
-        String rssiValue = wifiData.getRSSI() + " " + WifiConstants.RSSI_UNITS;
+        String rssiValue = wifiAnalyzeInfo.getRSSI() + " " + WifiConstants.RSSI_UNITS;
         holder.rssiChip.setText(rssiValue);
-        holder.rssiChip.setChipBackgroundColor(Color.parseColor(wifiData.getRssiLevel().getColor()));
+        holder.rssiChip.setChipBackgroundColor(Color.parseColor(wifiAnalyzeInfo.getRssiLevel().getColor()));
     }
 
     @Override
     public int getItemCount() {
-        return wifiDataList.size();
+        return wifiAnalyzeInfoList.size();
     }
 
-    public WifiData getItem(int position) {
-        return wifiDataList.get(position);
+    public WifiAnalyzeInfo getItem(int position) {
+        return wifiAnalyzeInfoList.get(position);
+    }
+
+    public List<WifiAnalyzeInfo> getItems() {
+        return wifiAnalyzeInfoList;
     }
 
     static class WifiViewHolder extends RecyclerView.ViewHolder {

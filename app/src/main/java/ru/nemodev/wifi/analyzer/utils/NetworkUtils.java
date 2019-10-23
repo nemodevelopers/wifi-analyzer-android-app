@@ -10,7 +10,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import ru.nemodev.wifi.analyzer.app.AndroidApplication;
+import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
 
 
 public final class NetworkUtils

@@ -21,23 +21,21 @@ public class WifiFragment extends Fragment {
 
     private WifiViewModel wifiViewModel;
     private RecyclerView wifiInfoList;
+    private WifiRecyclerViewAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         wifiViewModel = ViewModelProviders.of(this).get(WifiViewModel.class);
         View root = inflater.inflate(R.layout.fragment_wifi, container, false);
 
-        wifiInfoList = root.findViewById(R.id.wifi_info_list);
-        wifiInfoList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        wifiInfoList.setLayoutManager(llm);
+        initRecyclerView(root);
 
         Button scanBtn = root.findViewById(R.id.scan_btn);
         scanBtn.setOnClickListener(v -> getWifi());
 
-        String location = android.Manifest.permission.ACCESS_COARSE_LOCATION;
-        if (ActivityCompat.checkSelfPermission(getContext(), location) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[] { location }, 123);
-        }
+        Button sendReportBtn = root.findViewById(R.id.send_report_btn);
+        sendReportBtn.setOnClickListener(v -> sendWifiReport());
+
+        requestAccessCoarseLocationPermission();
 
         return root;
     }
@@ -64,10 +62,31 @@ public class WifiFragment extends Fragment {
 
         wifiViewModel.getWifi(getContext()).observe(this, wifiDataList -> {
 
-            WifiRecyclerViewAdapter adapter = new WifiRecyclerViewAdapter(wifiDataList);
+            adapter = new WifiRecyclerViewAdapter(wifiDataList);
             wifiInfoList.setAdapter(adapter);
 
             progressDialog.dismiss();
         });
+    }
+
+    private void sendWifiReport() {
+
+    }
+
+    private void initRecyclerView(View root) {
+        wifiInfoList = root.findViewById(R.id.wifi_info_list);
+        wifiInfoList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        wifiInfoList.setLayoutManager(llm);
+
+        adapter = new WifiRecyclerViewAdapter();
+        wifiInfoList.setAdapter(adapter);
+    }
+
+    private void requestAccessCoarseLocationPermission() {
+        String location = android.Manifest.permission.ACCESS_COARSE_LOCATION;
+        if (ActivityCompat.checkSelfPermission(getContext(), location) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[] { location }, 123);
+        }
     }
 }
