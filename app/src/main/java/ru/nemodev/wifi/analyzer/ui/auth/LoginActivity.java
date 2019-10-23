@@ -77,15 +77,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onNext(OAuthTokenDto oAuthTokenDto) {
                         Log.d("123", oAuthTokenDto.getAccess_token());
                         RetrofitApiFactory.tokenDto = oAuthTokenDto;
-                        onLoginSuccess();
                         progressDialog.dismiss();
+                        onLoginSuccess();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d("123", e.getMessage());
-                        onLoginFailed();
                         progressDialog.dismiss();
+                        onLoginFailed();
                     }
 
                     @Override

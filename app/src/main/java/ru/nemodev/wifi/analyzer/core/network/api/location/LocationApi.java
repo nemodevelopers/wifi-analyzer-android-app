@@ -9,7 +9,7 @@ import ru.nemodev.wifi.analyzer.core.network.dto.location.LocationDto;
 
 public interface LocationApi {
 
-    @GET
+    @GET("v1/location")
     Observable<List<LocationDto>> getList();
 
 }
