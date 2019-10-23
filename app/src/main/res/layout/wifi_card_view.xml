@@ -1,62 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wifi_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp">
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="8dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/wifi_card"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/ssid"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-            
-            <TextView
-                android:id="@+id/ssid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorBlack"
-                android:text="SSID"
-                android:textSize="22sp"/>
+            android:textColor="@color/textColorBlack"
+            android:text="SSID"
+            android:textSize="22sp"/>
 
-            <TextView
-                android:id="@+id/bssid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorGrey"
-                android:textSize="16sp"
-                android:paddingTop="8dp"
-                android:paddingStart="8dp"
-                android:text="BSSID:"
-                android:layout_below="@id/ssid"/>
+        <TextView
+            android:id="@+id/bssid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorGrey"
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:paddingStart="8dp"
+            android:text="BSSID:"
+            android:layout_below="@id/ssid"/>
 
-            <TextView
-                android:id="@+id/freq"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorGrey"
-                android:textSize="16sp"
-                android:paddingTop="8dp"
-                android:paddingStart="8dp"
-                android:text="FREQUENCY:"
-                android:layout_below="@id/bssid"/>
+        <TextView
+            android:id="@+id/freq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorGrey"
+            android:textSize="16sp"
+            android:paddingTop="8dp"
+            android:paddingStart="8dp"
+            android:text="FREQUENCY:"
+            android:layout_below="@id/bssid"/>
 
-            <com.robertlevonyan.views.chip.Chip
-                android:id="@+id/rssi_chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/bssid"
-                android:layout_alignEnd="@id/freq"
-                android:layout_alignParentEnd="true"
-                app:mcv_textColor="@color/colorChipTextClicked"/>
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/rssi_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bssid"
+            android:layout_alignEnd="@id/freq"
+            android:layout_alignParentEnd="true"
+            app:mcv_textColor="@color/colorChipTextClicked"/>
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>
