@@ -1,18 +1,28 @@
 package ru.nemodev.wifi.analyzer.ui.auth;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
-
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.nemodev.wifi.analyzer.R;
+import ru.nemodev.wifi.analyzer.core.network.RetrofitApiFactory;
+import ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory;
+import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 import ru.nemodev.wifi.analyzer.ui.AppActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -47,14 +57,42 @@ public class LoginActivity extends AppCompatActivity {
         String login = loginInput.getText().toString();
         String password = passInput.getText().toString();
 
-        // TODO Аутентификация
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("username", login);
+        queryParams.put("password", password);
+        queryParams.put("grant_type", "password");
+        queryParams.put("scope", "read write");
 
-        new android.os.Handler().postDelayed(
-                () -> {
-                    onLoginSuccess();
-                    // onLoginFailed();
-                    progressDialog.dismiss();
-                }, 3000);
+        OAuthApiFactory oAuthApiFactory = new OAuthApiFactory("mobile", "1234");
+        oAuthApiFactory.createApi().getToken(queryParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<OAuthTokenDto>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(OAuthTokenDto oAuthTokenDto) {
+                        Log.d("123", oAuthTokenDto.getAccess_token());
+                        RetrofitApiFactory.tokenDto = oAuthTokenDto;
+                        onLoginSuccess();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("123", e.getMessage());
+                        onLoginFailed();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
