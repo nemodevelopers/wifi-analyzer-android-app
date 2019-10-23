@@ -84,15 +84,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onNext(OAuthTokenDto oAuthTokenDto) {
                         RetrofitApiFactory.tokenDto = oAuthTokenDto;
-                        progressDialog.dismiss();
                         onLoginSuccess();
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "Ошибка входа!", e);
-                        progressDialog.dismiss();
                         onLoginFailed();
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -108,8 +108,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        loginBtn.setEnabled(true);
-
         Intent intent = new Intent(this, AppActivity.class);
         startActivity(intent);
     }
