@@ -1,6 +1,5 @@
 package ru.nemodev.wifi.analyzer.core.service.location;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -22,33 +21,18 @@ public class LocationService {
     public Observable<List<Location>> getList() {
         if (locationList == null) {
             LocationApiFactory locationApiFactory = new LocationApiFactory(RetrofitApiFactory.tokenDto.getAccess_token());
-            return locationApiFactory.createApi().getList()
-                    .map(this::convertList)
+
+            Observable<List<Location>> observable = locationApiFactory.createApi().getList()
+                    .map(LocationDto::toEntityList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
+
+            observable.subscribe(locations -> locationList = locations);
+
+            return observable;
         }
 
         return Observable.just(locationList);
-    }
-
-    private List<Location> convertList(List<LocationDto> locationDtoList) {
-        List<Location> locations = new ArrayList<>();
-
-        for (LocationDto locationDto : locationDtoList) {
-            locations.add(convert(locationDto));
-        }
-
-        this.locationList = locations;
-
-        return locations;
-    }
-
-    private Location convert(LocationDto locationDto) {
-        Location location = new Location();
-        location.setId(locationDto.getId());
-        location.setName(locationDto.getName());
-
-        return location;
     }
 
 }

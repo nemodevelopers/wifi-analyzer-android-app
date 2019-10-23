@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,9 +24,11 @@ import ru.nemodev.wifi.analyzer.core.network.RetrofitApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 import ru.nemodev.wifi.analyzer.ui.AppActivity;
+import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.rootLoginView) View rootLoginView;
     @BindView(R.id.login_input) EditText loginInput;
     @BindView(R.id.pass_input) EditText passInput;
     @BindView(R.id.btn_login) Button loginBtn;
@@ -108,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Ошибка", Toast.LENGTH_LONG).show();
+        AndroidUtils.showSnackBarMessage(rootLoginView, "Ошибка входа проверьте логин и пароль!");
 
         loginBtn.setEnabled(true);
     }

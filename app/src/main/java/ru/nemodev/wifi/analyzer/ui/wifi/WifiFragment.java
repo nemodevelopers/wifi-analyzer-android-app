@@ -3,7 +3,6 @@ package ru.nemodev.wifi.analyzer.ui.wifi;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import ru.nemodev.wifi.analyzer.R;
-import ru.nemodev.wifi.analyzer.core.entity.location.Location;
-import ru.nemodev.wifi.analyzer.core.service.location.LocationService;
 import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
+import ru.nemodev.wifi.analyzer.core.network.api.report.WifiAnalyzeReportService;
 import ru.nemodev.wifi.analyzer.core.report.ReportLocation;
 import ru.nemodev.wifi.analyzer.core.report.WifiAnalyzeReport;
-import ru.nemodev.wifi.analyzer.core.network.api.report.WifiAnalyzeReportService;
 
 public class WifiFragment extends Fragment {
 
@@ -80,29 +73,6 @@ public class WifiFragment extends Fragment {
             progressDialog.dismiss();
         });
 
-        // TODO пример получения локаций
-        LocationService.INSTANCE.getList()
-                .subscribe(new Observer<List<Location>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<Location> locations) {
-                        Log.d("123", locations.toString());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("123", e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 
     private void sendWifiReport() {
