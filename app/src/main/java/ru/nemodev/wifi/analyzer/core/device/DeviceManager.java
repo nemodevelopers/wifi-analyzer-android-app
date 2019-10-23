@@ -6,11 +6,15 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.format.Formatter;
 
+import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
+
 public class DeviceManager
 {
-    public static DeviceInfo getDeviceInfo(Context context) {
+    public static DeviceInfo getDeviceInfo() {
 
-        WifiManager manager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager manager = (WifiManager) AndroidApplication.getInstance()
+                .getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
         WifiInfo info = manager.getConnectionInfo();
 
         return new DeviceInfo(

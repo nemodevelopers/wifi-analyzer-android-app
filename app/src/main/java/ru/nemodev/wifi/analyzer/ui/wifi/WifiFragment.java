@@ -94,7 +94,7 @@ public class WifiFragment extends Fragment {
             WifiAnalyzeReport report = new WifiAnalyzeReport();
 
             report.setWifiAnalyzeInfoList(adapter.getItems());
-            report.setDeviceInfo(DeviceManager.getDeviceInfo(getContext()));
+            report.setDeviceInfo(DeviceManager.getDeviceInfo());
             report.setComment("test");
             report.setLocation(new ReportLocation("1862950d-dae2-4084-94dc-76da15a6a6ad", "test"));
 

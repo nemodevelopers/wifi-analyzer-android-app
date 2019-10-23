@@ -21,22 +21,24 @@ public class DeviceFragment extends Fragment {
     private DeviceViewModel deviceViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        deviceViewModel = ViewModelProviders.of(this).get(DeviceViewModel.class);
+        deviceViewModel = ViewModelProviders.of(this.getActivity()).get(DeviceViewModel.class);
         View root = inflater.inflate(R.layout.fragment_device, container, false);
 
         deviceInfoListView = root.findViewById(R.id.device_info_list);
-        deviceViewModel.getDeviceInfo(getContext()).observe(this, deviceInfo -> {
+        deviceViewModel.getDeviceInfo().observe(this, deviceInfo -> {
             ArrayList<String> deviceInfoList = new ArrayList<>();
-            deviceInfoList.add("Device: " + deviceInfo.getDevice());
-            deviceInfoList.add("Model: " + deviceInfo.getModel());
-            deviceInfoList.add("Release: " + deviceInfo.getRelease());
-            deviceInfoList.add("Version: " + deviceInfo.getVersion());
+            deviceInfoList.add("Устройство: " + deviceInfo.getDevice());
+            deviceInfoList.add("Модель: " + deviceInfo.getModel());
+            deviceInfoList.add("Версия Android: " + deviceInfo.getRelease());
+            deviceInfoList.add("Версия API: " + deviceInfo.getVersion());
             deviceInfoList.add("MAC: " + deviceInfo.getMac());
             deviceInfoList.add("IP: " + deviceInfo.getIp());
 
             ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, deviceInfoList.toArray());
             deviceInfoListView.setAdapter(arrayAdapter);
         });
+
+        deviceViewModel.refreshDeviceInfo();
 
         return root;
     }

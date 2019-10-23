@@ -1,26 +1,49 @@
 package ru.nemodev.wifi.analyzer.ui.device;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.github.pwittchen.reactivewifi.ReactiveWifi;
+import com.github.pwittchen.reactivewifi.WifiState;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
 import ru.nemodev.wifi.analyzer.core.device.DeviceInfo;
 import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
 
 public class DeviceViewModel extends ViewModel {
 
-    private MutableLiveData<DeviceInfo> deviceInfo;
+    private final MutableLiveData<DeviceInfo> deviceInfo;
+    protected Disposable wifiStatusDisposable;
 
     public DeviceViewModel() {
         deviceInfo = new MutableLiveData<>();
     }
 
-    public LiveData<DeviceInfo> getDeviceInfo(Context context) {
-        DeviceInfo device = DeviceManager.getDeviceInfo(context);
+    public LiveData<DeviceInfo> getDeviceInfo() {
 
-        deviceInfo.setValue(device);
+        if (wifiStatusDisposable == null) {
+            wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
+                    .filter(wifiState -> wifiState == WifiState.ENABLED || wifiState == WifiState.ENABLING)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(wifiState -> refreshDeviceInfo());
+        }
+
         return deviceInfo;
+    }
+
+    public void refreshDeviceInfo() {
+        DeviceInfo device = DeviceManager.getDeviceInfo();
+        deviceInfo.setValue(device);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (wifiStatusDisposable != null) {
+            wifiStatusDisposable.dispose();
+        }
     }
 }

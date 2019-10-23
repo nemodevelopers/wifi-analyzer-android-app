@@ -52,9 +52,16 @@ public class WifiViewModel extends ViewModel {
             wifiAnalyzeInfoList.add(wifiAnalyzeInfo);
         }
 
-        // TODO как правильно отписаться
         scanResultDisposable.dispose();
 
         return wifiAnalyzeInfoList;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (scanResultDisposable != null) {
+            scanResultDisposable.dispose();
+        }
     }
 }
