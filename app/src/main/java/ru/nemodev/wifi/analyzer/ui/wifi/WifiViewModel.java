@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.pwittchen.reactivewifi.ReactiveWifi;
+import com.github.pwittchen.reactivewifi.WifiState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,33 @@ public class WifiViewModel extends ViewModel {
     private final MutableLiveData<List<WifiAnalyzeInfo>> wifiScanResult;
     private Disposable scanResultDisposable;
 
+    private final MutableLiveData<WifiState> wifiStatus;
+    private Disposable wifiStatusDisposable;
+
     public WifiViewModel() {
         this.wifiScanResult = new MutableLiveData<>();
+        this.wifiStatus = new MutableLiveData<>();
+    }
+
+    public LiveData<WifiState> getWifiStatus() {
+
+        if (wifiStatusDisposable == null) {
+            wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
+                    .filter(wifiState -> wifiState == WifiState.ENABLED
+                            || wifiState == WifiState.DISABLED || wifiState == WifiState.UNKNOWN)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(wifiStatus::postValue,
+                            throwable -> {
+                                Crashlytics.logException(throwable);
+                                wifiStatus.postValue(WifiState.UNKNOWN);
+                            });
+        }
+
+        return wifiStatus;
+    }
+
+    public LiveData<List<WifiAnalyzeInfo>> getScanResult() {
+        return wifiScanResult;
     }
 
     public void scanWifi() {
@@ -33,10 +60,6 @@ public class WifiViewModel extends ViewModel {
         scanResultDisposable = ReactiveWifi.observeWifiAccessPoints(AndroidApplication.getInstance())
                 .subscribeOn(Schedulers.io())
                 .subscribe(scanResults -> wifiScanResult.postValue(convertScanResults(scanResults)));
-    }
-
-    public LiveData<List<WifiAnalyzeInfo>> getScanResult() {
-        return wifiScanResult;
     }
 
     private List<WifiAnalyzeInfo> convertScanResults(List<ScanResult> scanResults) {
@@ -62,6 +85,9 @@ public class WifiViewModel extends ViewModel {
         super.onCleared();
         if (scanResultDisposable != null) {
             scanResultDisposable.dispose();
+        }
+        if (wifiStatusDisposable != null) {
+            wifiStatusDisposable.dispose();
         }
     }
 }

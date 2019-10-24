@@ -52,6 +52,8 @@ public class SpeedViewModel extends ViewModel {
 
         if (wifiStatusDisposable == null) {
             wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
+                    .filter(wifiState -> wifiState == WifiState.ENABLED
+                            || wifiState == WifiState.DISABLED || wifiState == WifiState.UNKNOWN)
                     .subscribeOn(Schedulers.io())
                     .subscribe(wifiStatus::postValue,
                             throwable -> {

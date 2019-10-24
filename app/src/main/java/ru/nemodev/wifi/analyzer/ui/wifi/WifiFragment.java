@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.github.pwittchen.reactivewifi.WifiState;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +51,15 @@ public class WifiFragment extends Fragment {
         openDialogReportBtn.setOnClickListener(v -> openSendReportDialog());
 
         requestAccessCoarseLocationPermission();
+
+        wifiViewModel.getWifiStatus().observe(this, new Observer<WifiState>() {
+            @Override
+            public void onChanged(WifiState wifiState) {
+                if (wifiState != WifiState.ENABLED) {
+                    showInfoDialog("Для получения списка wi-fi сетей необходимо подключиться к wi-fi и предоставить доступ к геолокации!");
+                }
+            }
+        });
 
         return rootView;
     }
@@ -119,5 +132,12 @@ public class WifiFragment extends Fragment {
         else {
             scanWifi();
         }
+    }
+
+    private void showInfoDialog(String message) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, id) -> { })
+                .create().show();
     }
 }

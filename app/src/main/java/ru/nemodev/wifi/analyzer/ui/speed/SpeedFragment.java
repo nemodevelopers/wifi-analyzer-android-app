@@ -55,7 +55,7 @@ public class SpeedFragment extends Fragment {
             }
             else if (wifiState == WifiState.DISABLED || wifiState == WifiState.UNKNOWN){
                 speedTestBtn.setVisibility(View.GONE);
-                showInfoDialog("Для теста скорости необходимо подключиться к Wi-Fi!");
+                showInfoDialog("Для теста скорости необходимо подключиться к wi-fi!");
             }
         });
 

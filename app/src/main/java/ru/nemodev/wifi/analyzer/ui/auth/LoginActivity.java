@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        AndroidUtils.showSnackBarMessageShort(rootLoginView, "Ошибка входа проверьте логин и пароль!");
+        AndroidUtils.showSnackBarMessageLong(rootLoginView, "Ошибка входа проверьте логин, пароль и подключение к сети!");
 
         loginBtn.setEnabled(true);
         progressDialog.dismiss();
