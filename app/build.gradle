@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -36,7 +37,7 @@ dependencies {
     // view base
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
 
     // rxjava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -52,9 +53,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
 
     // room
-    implementation 'androidx.room:room-runtime:2.2.0-rc01'
-    implementation 'androidx.room:room-rxjava2:2.2.0-rc01'
-    annotationProcessor 'androidx.room:room-compiler:2.2.0-rc01'
+    implementation 'androidx.room:room-runtime:2.2.0'
+    implementation 'androidx.room:room-rxjava2:2.2.0'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0'
 
     // butterknife
     implementation 'com.jakewharton:butterknife:10.2.0'
@@ -67,9 +68,8 @@ dependencies {
     implementation 'org.apache.commons:commons-collections4:4.4'
 
     // system
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true
-    }
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // test
     testImplementation 'junit:junit:4.12'
@@ -77,9 +77,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'fr.bmartel:jspeedtest:1.32.1'
-
-    implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
-
     implementation 'com.robertlevonyan.view:MaterialChipView:2.0.3'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.pwittchen.reactivewifi.ReactiveWifi;
 import com.github.pwittchen.reactivewifi.WifiState;
 
@@ -52,7 +53,11 @@ public class SpeedViewModel extends ViewModel {
         if (wifiStatusDisposable == null) {
             wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(wifiStatus::postValue);
+                    .subscribe(wifiStatus::postValue,
+                            throwable -> {
+                                Crashlytics.logException(throwable);
+                                wifiStatus.postValue(WifiState.UNKNOWN);
+                            });
         }
 
         return wifiStatus;
@@ -64,7 +69,11 @@ public class SpeedViewModel extends ViewModel {
         if (activeWifiDisposable == null) {
             activeWifiDisposable = ReactiveWifi.observeWifiAccessPointChanges(AndroidApplication.getInstance().getApplicationContext())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(wifiInfo -> activeWifi.postValue(EntityWrapper.of(wifiInfo)));
+                    .subscribe(wifiInfo -> activeWifi.postValue(EntityWrapper.of(wifiInfo)),
+                            throwable -> {
+                                Crashlytics.logException(throwable);
+                                activeWifi.postValue(EntityWrapper.of("Ошибка получения информации wi-fi, попробуйте переподключить wifi!"));
+                            });
         }
 
         return activeWifi;
@@ -106,7 +115,8 @@ public class SpeedViewModel extends ViewModel {
             return true; })
                 .subscribeOn(Schedulers.io())
                 .subscribe(isStart -> {},
-                        exception -> {
+                        throwable -> {
+                            Crashlytics.logException(throwable);
                             speedTest.setValue(EntityWrapper.of("Ошибка теста скорости wifi сети!" +
                                     "\nПроверьте подключение к сети wifi!"));
                         });

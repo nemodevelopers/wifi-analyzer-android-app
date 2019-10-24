@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803523678331",
+    "firebase_url": "https://wifi-analyzer-bec4e.firebaseio.com",
+    "project_id": "wifi-analyzer-bec4e",
+    "storage_bucket": "wifi-analyzer-bec4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803523678331:android:8e8faa16285e0b5cea12de",
+        "android_client_info": {
+          "package_name": "ru.nemodev.wifi.analyzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803523678331-ppotks3vqfs8aadqj0g1ksq9sk6paa7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3OnO4VB9CytNCBzXI0xSp6yIeDi-gVBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803523678331-ppotks3vqfs8aadqj0g1ksq9sk6paa7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

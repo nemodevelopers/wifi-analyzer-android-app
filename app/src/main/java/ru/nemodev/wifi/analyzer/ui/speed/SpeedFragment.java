@@ -61,15 +61,20 @@ public class SpeedFragment extends Fragment {
 
         speedViewModel.getActiveWifi().observe(this, wifiInfoEntityWrapper -> {
 
-            WifiInfo wifiInfo = wifiInfoEntityWrapper.getEntity();
-            ssid.setText("Активный Wi-Fi: " + wifiInfo.getSSID().replace("\"", ""));
-            bssid.setText(wifiInfo.getBSSID());
-            freq.setText(wifiInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz");
+            if (wifiInfoEntityWrapper.getErrorMessage() != null) {
+                ssid.setText(wifiInfoEntityWrapper.getErrorMessage());
+            }
+            else if (wifiInfoEntityWrapper.getEntity() != null) {
+                WifiInfo wifiInfo = wifiInfoEntityWrapper.getEntity();
+                ssid.setText("Активный wi-fi: " + wifiInfo.getSSID().replace("\"", ""));
+                bssid.setText(wifiInfo.getBSSID());
+                freq.setText(wifiInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz");
 
-            String rssiValue = wifiInfo.getRssi() + " " + WifiConstants.RSSI_UNITS;
-            rssiChip.setText(rssiValue);
-            rssiChip.setChipBackgroundColor(Color.parseColor(
-                    RssiLevel.defineRssiLevel(wifiInfo.getRssi()).getColor()));
+                String rssiValue = wifiInfo.getRssi() + " " + WifiConstants.RSSI_UNITS;
+                rssiChip.setText(rssiValue);
+                rssiChip.setChipBackgroundColor(Color.parseColor(
+                        RssiLevel.defineRssiLevel(wifiInfo.getRssi()).getColor()));
+            }
 
             speedTestResult.setText("");
         });

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+
 public final class LogUtils
 {
     private LogUtils() { }

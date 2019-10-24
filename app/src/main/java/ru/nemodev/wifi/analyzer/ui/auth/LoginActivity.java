@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
 
+        loginBtn.setEnabled(true);
         progressDialog.dismiss();
 
         Intent intent = new Intent(this, AppActivity.class);
