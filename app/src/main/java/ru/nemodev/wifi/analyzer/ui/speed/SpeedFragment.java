@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.github.pwittchen.reactivewifi.WifiState;
 import com.robertlevonyan.views.chip.Chip;
 
 import butterknife.BindView;
@@ -48,10 +49,20 @@ public class SpeedFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         speedViewModel = ViewModelProviders.of(this.getActivity()).get(SpeedViewModel.class);
 
+        speedViewModel.getWifiStatus().observe(this, wifiState -> {
+            if (wifiState == WifiState.ENABLED) {
+                speedTestBtn.setVisibility(View.VISIBLE);
+            }
+            else if (wifiState == WifiState.DISABLED || wifiState == WifiState.UNKNOWN){
+                speedTestBtn.setVisibility(View.GONE);
+                showInfoDialog("Для теста скорости необходимо подключиться к wifi!");
+            }
+        });
+
         speedViewModel.getActiveWifi().observe(this, wifiInfoEntityWrapper -> {
 
             WifiInfo wifiInfo = wifiInfoEntityWrapper.getEntity();
-            ssid.setText("Активный wifi " + wifiInfo.getSSID().replace("\"", ""));
+            ssid.setText("Активный wifi - " + wifiInfo.getSSID().replace("\"", ""));
             bssid.setText(wifiInfo.getBSSID());
             freq.setText(wifiInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz");
 
@@ -60,7 +71,7 @@ public class SpeedFragment extends Fragment {
             rssiChip.setChipBackgroundColor(Color.parseColor(
                     RssiLevel.defineRssiLevel(wifiInfo.getRssi()).getColor()));
 
-            speedTestBtn.setVisibility(View.VISIBLE);
+            speedTestResult.setText("");
         });
 
         speedViewModel.getSpeedTestData().observe(this, speedTestWrapper -> {
@@ -71,6 +82,9 @@ public class SpeedFragment extends Fragment {
             else {
                 SpeedTest speedTest = speedTestWrapper.getEntity();
                 progressBar.setProgress(Math.round(speedTest.getReport().getProgressPercent()));
+                if (progressBar.getProgress() > 0) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
                 String speed = String.format("%.2f", speedTest.getReport().getTransferRateBit().floatValue() / mbit)  + " Mb/sec";
                 speedTestResult.setText("Скорость " + speed);
                 if (!speedTest.isProgress()) {

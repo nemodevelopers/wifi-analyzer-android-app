@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.github.pwittchen.reactivewifi.ReactiveWifi;
+import com.github.pwittchen.reactivewifi.WifiState;
 
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
@@ -31,16 +32,32 @@ public class SpeedViewModel extends ViewModel {
     private final MutableLiveData<EntityWrapper<WifiInfo>> activeWifi;
     private Disposable activeWifiDisposable;
 
+    private final MutableLiveData<WifiState> wifiStatus;
+    private Disposable wifiStatusDisposable;
+
     private SpeedTestSocket speedTestSocket;
 
     public SpeedViewModel() {
         speedTest = new MutableLiveData<>();
         activeWifi = new MutableLiveData<>();
+        wifiStatus = new MutableLiveData<>();
     }
 
     public LiveData<EntityWrapper<SpeedTest>> getSpeedTestData() {
         return speedTest;
     }
+
+    public LiveData<WifiState> getWifiStatus() {
+
+        if (wifiStatusDisposable == null) {
+            wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(wifiStatus::postValue);
+        }
+
+        return wifiStatus;
+    }
+
 
     public LiveData<EntityWrapper<WifiInfo>> getActiveWifi() {
 
@@ -105,6 +122,9 @@ public class SpeedViewModel extends ViewModel {
         }
         if (activeWifiDisposable != null) {
             activeWifiDisposable.dispose();
+        }
+        if (wifiStatusDisposable != null) {
+            wifiStatusDisposable.dispose();
         }
     }
 }
