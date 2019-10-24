@@ -55,14 +55,14 @@ public class SpeedFragment extends Fragment {
             }
             else if (wifiState == WifiState.DISABLED || wifiState == WifiState.UNKNOWN){
                 speedTestBtn.setVisibility(View.GONE);
-                showInfoDialog("Для теста скорости необходимо подключиться к wifi!");
+                showInfoDialog("Для теста скорости необходимо подключиться к Wi-Fi!");
             }
         });
 
         speedViewModel.getActiveWifi().observe(this, wifiInfoEntityWrapper -> {
 
             WifiInfo wifiInfo = wifiInfoEntityWrapper.getEntity();
-            ssid.setText("Активный wifi - " + wifiInfo.getSSID().replace("\"", ""));
+            ssid.setText("Активный Wi-Fi: " + wifiInfo.getSSID().replace("\"", ""));
             bssid.setText(wifiInfo.getBSSID());
             freq.setText(wifiInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz");
 

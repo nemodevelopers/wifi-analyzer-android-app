@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.nemodev.wifi.analyzer.core.app.AndroidApplication;
 import ru.nemodev.wifi.analyzer.core.device.DeviceInfo;
 import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
+import ru.nemodev.wifi.analyzer.core.entity.EntityWrapper;
 
 public class DeviceViewModel extends ViewModel {
 

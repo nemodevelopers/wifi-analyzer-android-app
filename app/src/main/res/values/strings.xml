@@ -5,15 +5,18 @@
     <string name="menu_device">Устройство</string>
     <string name="menu_speed">Скорость</string>
 
-    <string name="bar_title_wifi">Список wi-fi сетей</string>
-    <string name="bar_title_device">Информация по устройству</string>
-    <string name="bar_title_speed">Тест скорости wi-fi</string>
+    <string name="bar_title_wifi">Список Wi-Fi сетей</string>
+    <string name="bar_title_device">Информация об устройстве</string>
+    <string name="bar_title_speed">Тест скорости Wi-Fi</string>
 
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
 
     <string name="scan">Сканировать</string>
-    <string name="send">Отчет</string>
+    <string name="send">Отправить</string>
     <string name="cancel">Отмена</string>
+
+    <string name="input_comment">Введите комментарий</string>
+    <string name="enable_wifi">Подключитесь к  Wi-Fi для теста скорости</string>
 </resources>

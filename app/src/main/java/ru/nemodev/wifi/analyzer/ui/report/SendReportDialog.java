@@ -145,13 +145,13 @@ public class SendReportDialog extends BottomSheetDialogFragment {
                     @Override
                     public void onNext(WifiAnalyzeReportDto wifiAnalyzeReportDto) {
                         AndroidUtils.showSnackBarMessageLong(rootView,
-                                "Отчет успешно отправлен!");
+                                "Отчет отправлен");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         AndroidUtils.showSnackBarMessageLong(rootView,
-                                "Произошла ошибка при отправке отчета!");
+                                "Произошла ошибка при отправке отчета");
                     }
 
                     @Override

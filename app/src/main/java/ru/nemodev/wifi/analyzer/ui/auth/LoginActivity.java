@@ -111,13 +111,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
 
+        progressDialog.dismiss();
+
         Intent intent = new Intent(this, AppActivity.class);
         startActivity(intent);
-
-        loginInput.setText("");
-        passInput.setText("");
-        loginBtn.setEnabled(true);
-        progressDialog.dismiss();
     }
 
     public void onLoginFailed() {
