@@ -12,6 +12,7 @@ public class WifiAnalyzeInfoDto extends BaseEntityDto {
     private Integer rssi;
     private String signalLevel;
     private Integer frequency;
+    private String speed;
 
     public WifiAnalyzeInfoDto() {
     }
@@ -64,6 +65,14 @@ public class WifiAnalyzeInfoDto extends BaseEntityDto {
         this.frequency = frequency;
     }
 
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
+    }
+
     public static WifiAnalyzeInfoDto fromEntity(WifiAnalyzeInfo wifiAnalyzeInfo) {
         WifiAnalyzeInfoDto wifiAnalyzeInfoDto = new WifiAnalyzeInfoDto();
         wifiAnalyzeInfoDto.setCreationDate(null);
@@ -72,6 +81,7 @@ public class WifiAnalyzeInfoDto extends BaseEntityDto {
         wifiAnalyzeInfoDto.setRssi(wifiAnalyzeInfo.getRSSI());
         wifiAnalyzeInfoDto.setSignalLevel(wifiAnalyzeInfo.getRssiLevel().name());
         wifiAnalyzeInfoDto.setFrequency(wifiAnalyzeInfo.getFrequency());
+        wifiAnalyzeInfoDto.setSpeed(wifiAnalyzeInfo.getSpeed());
 
         return wifiAnalyzeInfoDto;
     }

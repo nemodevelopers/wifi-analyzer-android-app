@@ -29,8 +29,9 @@ import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
 
 public class SpeedFragment extends Fragment {
 
+    public static float mbit = 8 * 1024 * 1024;
+
     private SpeedViewModel speedViewModel;
-    private static float mbit = 8 * 1024 * 1024;
 
     private View rootView;
 

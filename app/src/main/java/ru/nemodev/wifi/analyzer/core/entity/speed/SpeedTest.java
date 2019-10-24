@@ -22,6 +22,10 @@ public class SpeedTest {
         this.progress = progress;
     }
 
+    public WifiInfo getWifiInfo() {
+        return wifiInfo;
+    }
+
     public SpeedTestReport getReport() {
         return report;
     }

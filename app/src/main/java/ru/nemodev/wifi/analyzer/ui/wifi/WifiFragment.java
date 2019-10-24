@@ -2,6 +2,7 @@ package ru.nemodev.wifi.analyzer.ui.wifi;
 
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.pwittchen.reactivewifi.WifiState;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.nemodev.wifi.analyzer.R;
 import ru.nemodev.wifi.analyzer.core.entity.EntityWrapper;
 import ru.nemodev.wifi.analyzer.core.entity.speed.SpeedTest;
+import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 import ru.nemodev.wifi.analyzer.ui.report.SendReportDialog;
 import ru.nemodev.wifi.analyzer.ui.speed.SpeedViewModel;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
+
+import static ru.nemodev.wifi.analyzer.ui.speed.SpeedFragment.mbit;
 
 public class WifiFragment extends Fragment {
 
@@ -104,8 +110,22 @@ public class WifiFragment extends Fragment {
 
         if (adapter.getItemCount() > 0) {
             EntityWrapper<SpeedTest> speedTest = ViewModelProviders.of(this.getActivity()).get(SpeedViewModel.class).getSpeedTestData().getValue();
+            List<WifiAnalyzeInfo> wifiAnalyzeInfoList = adapter.getItems();
 
-            SendReportDialog wifiInfoDialog = SendReportDialog.init(getContext(), rootView, adapter.getItems());
+            if (speedTest != null && speedTest.getEntity() != null) {
+                WifiInfo wifiInfo = speedTest.getEntity().getWifiInfo();
+                if (wifiInfo != null) {
+                    for (WifiAnalyzeInfo wifiAnalyzeInfo : wifiAnalyzeInfoList) {
+                        if (wifiAnalyzeInfo.getBSSID().equals(wifiInfo.getBSSID())) {
+                            String speed = String.format("%.2f", speedTest.getEntity().getReport().getTransferRateBit().floatValue() / mbit)  + " Mb/sec";
+                            wifiAnalyzeInfo.setSpeed(speed);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            SendReportDialog wifiInfoDialog = SendReportDialog.init(getContext(), rootView, wifiAnalyzeInfoList);
             wifiInfoDialog.show(getFragmentManager(), SendReportDialog.class.getName());
 
         } else {

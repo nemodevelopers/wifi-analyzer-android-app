@@ -30,6 +30,8 @@ public class WifiAnalyzeInfo {
 
     private RssiLevel rssiLevel;
 
+    private String speed;
+
     public WifiAnalyzeInfo() {
     }
 
@@ -80,5 +82,13 @@ public class WifiAnalyzeInfo {
 
     public void setRssiLevel(RssiLevel rssiLevel) {
         this.rssiLevel = rssiLevel;
+    }
+
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
     }
 }
