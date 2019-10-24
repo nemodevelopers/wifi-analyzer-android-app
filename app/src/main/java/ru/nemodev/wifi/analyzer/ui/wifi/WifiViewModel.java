@@ -32,7 +32,7 @@ public class WifiViewModel extends ViewModel {
 
         scanResultDisposable = ReactiveWifi.observeWifiAccessPoints(AndroidApplication.getInstance())
                 .subscribeOn(Schedulers.io())
-                .subscribe(scanResults -> wifiScanResult.setValue(convertScanResults(scanResults)));
+                .subscribe(scanResults -> wifiScanResult.postValue(convertScanResults(scanResults)));
     }
 
     public LiveData<List<WifiAnalyzeInfo>> getScanResult() {

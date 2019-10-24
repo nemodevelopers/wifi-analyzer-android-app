@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Wi-Fi Analyzer</string>
-    <string name="title_wifi">Wi-Fi</string>
-    <string name="title_device">Устройство</string>
-    <string name="title_speed">Скорость</string>
+
+    <string name="menu_wifi">Wi-Fi</string>
+    <string name="menu_device">Устройство</string>
+    <string name="menu_speed">Скорость</string>
+
+    <string name="bar_title_wifi">Список wi-fi сетей</string>
+    <string name="bar_title_device">Информация по устройству</string>
+    <string name="bar_title_speed">Тест скорости wi-fi</string>
 
     <string name="login">Логин</string>
     <string name="password">Пароль</string>

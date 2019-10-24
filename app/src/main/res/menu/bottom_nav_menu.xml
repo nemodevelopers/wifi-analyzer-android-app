@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_wifi"
         android:icon="@drawable/ic_wifi_black_24dp"
-        android:title="@string/title_wifi" />
+        android:title="@string/menu_wifi" />
 
     <item
         android:id="@+id/navigation_device"
         android:icon="@drawable/ic_device_24dp"
-        android:title="@string/title_device" />
+        android:title="@string/menu_device" />
 
     <item
         android:id="@+id/navigation_speed"
         android:icon="@drawable/ic_swap_vert_black_24dp"
-        android:title="@string/title_speed" />
+        android:title="@string/menu_speed" />
 
 </menu>

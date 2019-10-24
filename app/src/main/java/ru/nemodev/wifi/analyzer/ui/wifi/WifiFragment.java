@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -18,16 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import ru.nemodev.wifi.analyzer.R;
 import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
 import ru.nemodev.wifi.analyzer.core.network.api.report.WifiAnalyzeReportService;
+import ru.nemodev.wifi.analyzer.core.network.dto.wifi.report.WifiAnalyzeReportDto;
 import ru.nemodev.wifi.analyzer.core.report.ReportLocation;
 import ru.nemodev.wifi.analyzer.core.report.WifiAnalyzeReport;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
 
 public class WifiFragment extends Fragment {
 
-    private View root;
+    private View rootView;
     @BindView(R.id.scan_btn) Button scanBtn;
     @BindView(R.id.send_report_btn) Button sendReportBtn;
 
@@ -38,8 +41,8 @@ public class WifiFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         wifiViewModel = ViewModelProviders.of(this.getActivity()).get(WifiViewModel.class);
-        root = inflater.inflate(R.layout.fragment_wifi, container, false);
-        ButterKnife.bind(this, root);
+        rootView = inflater.inflate(R.layout.fragment_wifi, container, false);
+        ButterKnife.bind(this, rootView);
 
         initRecyclerView();
         initProgressDialog();
@@ -49,7 +52,7 @@ public class WifiFragment extends Fragment {
 
         requestAccessCoarseLocationPermission();
 
-        return root;
+        return rootView;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class WifiFragment extends Fragment {
             if (results[0] == PackageManager.PERMISSION_GRANTED) {
                 observeScanResult();
             } else {
-                AndroidUtils.showSnackBarMessage(this.getView(), "Без согласия не получить список WI-FI сетей");
+                AndroidUtils.showSnackBarMessageShort(this.getView(), "Без согласия не получить список WI-FI сетей");
                 requestAccessCoarseLocationPermission();
             }
         } else {
@@ -98,14 +101,38 @@ public class WifiFragment extends Fragment {
             report.setComment("test");
             report.setLocation(new ReportLocation("1862950d-dae2-4084-94dc-76da15a6a6ad", "test"));
 
-            WifiAnalyzeReportService.getInstance(getContext()).sendReport(report);
+            WifiAnalyzeReportService.getInstance().sendReport(report)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<WifiAnalyzeReportDto>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(WifiAnalyzeReportDto wifiAnalyzeReportDto) {
+                            AndroidUtils.showSnackBarMessageLong(rootView,
+                                    "Отчет успешно отправлен!");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            AndroidUtils.showSnackBarMessageLong(rootView,
+                                    "Произошла ошибка попробуйте отправить отчет позже!");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
         } else {
-            Toast.makeText(getContext(), "В отчете нет данных о Wi-Fi сетях!", Toast.LENGTH_LONG).show();
+            AndroidUtils.showSnackBarMessageLong(rootView, "В отчете нет данных о Wi-Fi сетях!");
         }
     }
 
     private void initRecyclerView() {
-        wifiInfoList = root.findViewById(R.id.wifi_info_list);
+        wifiInfoList = rootView.findViewById(R.id.wifi_info_list);
         wifiInfoList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         wifiInfoList.setLayoutManager(llm);

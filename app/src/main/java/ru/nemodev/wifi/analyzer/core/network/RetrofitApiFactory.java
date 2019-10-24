@@ -13,12 +13,9 @@ import okhttp3.Protocol;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 
 
 public abstract class RetrofitApiFactory<T> {
-
-    public static OAuthTokenDto tokenDto;
 
     private static final int CONNECT_TIMEOUT = 10;
     private static final int WRITE_TIMEOUT = 10;

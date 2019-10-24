@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/navigation_wifi"
         android:name="ru.nemodev.wifi.analyzer.ui.wifi.WifiFragment"
-        android:label="@string/title_wifi"
+        android:label="@string/bar_title_wifi"
         tools:layout="@layout/fragment_wifi" />
 
     <fragment
         android:id="@+id/navigation_device"
         android:name="ru.nemodev.wifi.analyzer.ui.device.DeviceFragment"
-        android:label="@string/title_device"
+        android:label="@string/bar_title_device"
         tools:layout="@layout/fragment_device" />
 
     <fragment
         android:id="@+id/navigation_speed"
         android:name="ru.nemodev.wifi.analyzer.ui.speed.SpeedFragment"
-        android:label="@string/title_speed"
+        android:label="@string/bar_title_speed"
         tools:layout="@layout/fragment_speed" />
 
 </navigation>

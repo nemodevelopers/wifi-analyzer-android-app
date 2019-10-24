@@ -67,16 +67,26 @@ public final class AndroidUtils
 
     public static void showSnackBarMessage(View whereShow, int textId)
     {
-        showSnackBarMessage(whereShow, AndroidUtils.getString(textId));
+        showSnackBarMessageShort(whereShow, AndroidUtils.getString(textId));
     }
 
-    public static void showSnackBarMessage(View whereShow, String message)
+    public static void showSnackBarMessageShort(View whereShow, String message)
+    {
+        showSnackBarMessage(whereShow, message, Snackbar.LENGTH_SHORT);
+    }
+
+    public static void showSnackBarMessageLong(View whereShow, String message)
+    {
+        showSnackBarMessage(whereShow, message, Snackbar.LENGTH_LONG);
+    }
+
+    public static void showSnackBarMessage(View whereShow, String message, int snackBarDuration)
     {
         try
         {
             Snackbar
-                .make(whereShow, message, Snackbar.LENGTH_SHORT)
-                .show();
+                    .make(whereShow, message, snackBarDuration)
+                    .show();
         }
         catch (Exception e)
         {

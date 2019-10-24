@@ -1,8 +1,6 @@
 package ru.nemodev.wifi.analyzer.ui.wifi;
 
 import android.graphics.Color;
-import android.text.Html;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 import ru.nemodev.wifi.analyzer.R;
-import ru.nemodev.wifi.analyzer.core.wifi.WifiConstants;
 import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
+import ru.nemodev.wifi.analyzer.core.wifi.WifiConstants;
 
 public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerViewAdapter.WifiViewHolder> {
 
@@ -49,7 +47,8 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
         holder.ssid.setText(wifiAnalyzeInfo.getSSID());
         holder.bssid.setText(wifiAnalyzeInfo.getBSSID());
 
-        String frequency = wifiAnalyzeInfo.getFrequency() + " " + WifiConstants.FREQ_UNITS;
+
+        String frequency = wifiAnalyzeInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz";
         holder.frequency.setText(frequency);
 
         String rssiValue = wifiAnalyzeInfo.getRSSI() + " " + WifiConstants.RSSI_UNITS;

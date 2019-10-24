@@ -21,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.nemodev.wifi.analyzer.R;
-import ru.nemodev.wifi.analyzer.core.network.RetrofitApiFactory;
+import ru.nemodev.wifi.analyzer.core.auth.AuthContext;
 import ru.nemodev.wifi.analyzer.core.network.api.oauth.OAuthApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.oauth.OAuthTokenDto;
 import ru.nemodev.wifi.analyzer.ui.AppActivity;
@@ -36,11 +36,17 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.pass_input) EditText passInput;
     @BindView(R.id.btn_login) Button loginBtn;
 
+    private ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Аутентификация...");
 
         loginBtn.setOnClickListener(v -> login());
     }
@@ -52,14 +58,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
 
         loginBtn.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Аутентификация...");
         progressDialog.show();
 
         String login = loginInput.getText().toString();
@@ -83,16 +87,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(OAuthTokenDto oAuthTokenDto) {
-                        RetrofitApiFactory.tokenDto = oAuthTokenDto;
+                        AuthContext.tokenDto = oAuthTokenDto;
                         onLoginSuccess();
-                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "Ошибка входа!", e);
                         onLoginFailed();
-                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -108,14 +110,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
+
         Intent intent = new Intent(this, AppActivity.class);
         startActivity(intent);
+
+        loginInput.setText("");
+        passInput.setText("");
+        loginBtn.setEnabled(true);
+        progressDialog.dismiss();
     }
 
     public void onLoginFailed() {
-        AndroidUtils.showSnackBarMessage(rootLoginView, "Ошибка входа проверьте логин и пароль!");
+        AndroidUtils.showSnackBarMessageShort(rootLoginView, "Ошибка входа проверьте логин и пароль!");
 
         loginBtn.setEnabled(true);
+        progressDialog.dismiss();
     }
 
     public boolean validate() {

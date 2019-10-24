@@ -1,6 +1,5 @@
 package ru.nemodev.wifi.analyzer.ui.speed;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,76 +11,38 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-
-import fr.bmartel.speedtest.SpeedTestReport;
-import fr.bmartel.speedtest.SpeedTestSocket;
-import fr.bmartel.speedtest.inter.ISpeedTestListener;
-import fr.bmartel.speedtest.model.SpeedTestError;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.nemodev.wifi.analyzer.R;
+import ru.nemodev.wifi.analyzer.core.entity.speed.SpeedTest;
+
 
 public class SpeedFragment extends Fragment {
 
-    private SpeedTestSocket speedTestSocket;
-
-    /**
-     * socket timeout used in ms.
-     */
-    private final static int SOCKET_TIMEOUT = 5000;
-
-    /**
-     * spedd examples server uri.
-     */
-    private final static String SPEED_TEST_SERVER_URI_DL = "http://ipv4.ikoula.testdebit.info/10M.iso";
-
     private SpeedViewModel speedViewModel;
 
+    View rootView;
+    @BindView(R.id.speed_test_result) TextView speedTestResult;
+    @BindView(R.id.speed_test_btn) Button speedTestBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_speed, container, false);
+        ButterKnife.bind(this, rootView);
+        speedViewModel = ViewModelProviders.of(this.getActivity()).get(SpeedViewModel.class);
 
-        speedViewModel =
-                ViewModelProviders.of(this).get(SpeedViewModel.class);
-
-
-        View root = inflater.inflate(R.layout.fragment_speed, container, false);
-        final TextView speedTest = root.findViewById(R.id.speed_test);
-
-        speedTestSocket = new SpeedTestSocket();
-
-        speedTestSocket.setSocketTimeout(SOCKET_TIMEOUT);
-
-        speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
-
-            @Override
-            public void onCompletion(final SpeedTestReport report) {
-                speedTest.setText(String.valueOf(report.getTransferRateBit()));
+        speedViewModel.getSpeedTestData().observe(this, speedTestWrapper -> {
+            if (speedTestWrapper.getErrorMessage() != null) {
+                speedTestResult.setText(speedTestWrapper.getErrorMessage());
             }
-
-            @Override
-            public void onError(final SpeedTestError speedTestError, final String errorMessage) {
-                speedTest.setText(errorMessage);
-            }
-
-            @Override
-            public void onProgress(final float percent, final SpeedTestReport downloadReport) {
-                speedTest.setText(String.valueOf(percent));
+            else {
+                // TODO перевод из бит в мб + доделать вьюшку
+                SpeedTest speedTest = speedTestWrapper.getEntity();
+                speedTestResult.setText(String.valueOf(speedTest.getReport().getTransferRateBit()));
             }
         });
+        speedTestBtn.setOnClickListener(v -> speedViewModel.testSpeed());
 
-        Button speedTestBtn = root.findViewById(R.id.speed_test_btn);
-
-        speedTestBtn.setOnClickListener(v -> new SpeedTestTask().execute());
-
-
-        return root;
-    }
-
-    private class SpeedTestTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            speedTestSocket.startDownload(SPEED_TEST_SERVER_URI_DL);
-            return null;
-        }
+        return rootView;
     }
 }

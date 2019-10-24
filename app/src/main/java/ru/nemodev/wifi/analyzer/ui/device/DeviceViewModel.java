@@ -16,7 +16,7 @@ import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
 public class DeviceViewModel extends ViewModel {
 
     private final MutableLiveData<DeviceInfo> deviceInfo;
-    protected Disposable wifiStatusDisposable;
+    private Disposable wifiStatusDisposable;
 
     public DeviceViewModel() {
         deviceInfo = new MutableLiveData<>();
@@ -35,8 +35,7 @@ public class DeviceViewModel extends ViewModel {
     }
 
     public void refreshDeviceInfo() {
-        DeviceInfo device = DeviceManager.getDeviceInfo();
-        deviceInfo.setValue(device);
+        deviceInfo.postValue(DeviceManager.getDeviceInfo());
     }
 
     @Override
