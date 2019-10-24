@@ -42,6 +42,7 @@ public class WifiFragment extends Fragment {
 
         initRecyclerView();
         initProgressDialog();
+        observeScanResult();
 
         scanBtn.setOnClickListener(v -> scanWifi());
         openDialogReportBtn.setOnClickListener(v -> openSendReportDialog());
@@ -53,9 +54,9 @@ public class WifiFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
-        if (requestCode == 123) {
+        if (requestCode == 77) {
             if (results[0] == PackageManager.PERMISSION_GRANTED) {
-                observeScanResult();
+                scanWifi();
             } else {
                 AndroidUtils.showSnackBarMessageShort(this.getView(), "Без согласия не получить список WI-FI сетей");
                 requestAccessCoarseLocationPermission();
@@ -113,10 +114,9 @@ public class WifiFragment extends Fragment {
     private void requestAccessCoarseLocationPermission() {
         String location = android.Manifest.permission.ACCESS_COARSE_LOCATION;
         if (ActivityCompat.checkSelfPermission(getContext(), location) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[] { location }, 123);
+            ActivityCompat.requestPermissions(getActivity(), new String[] { location }, 77);
         }
         else {
-            observeScanResult();
             scanWifi();
         }
     }
