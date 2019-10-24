@@ -17,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import ru.nemodev.wifi.analyzer.R;
-
+import ru.nemodev.wifi.analyzer.core.entity.EntityWrapper;
+import ru.nemodev.wifi.analyzer.core.entity.speed.SpeedTest;
 import ru.nemodev.wifi.analyzer.ui.report.SendReportDialog;
+import ru.nemodev.wifi.analyzer.ui.speed.SpeedViewModel;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
 
 public class WifiFragment extends Fragment {
@@ -89,6 +90,8 @@ public class WifiFragment extends Fragment {
     private void openSendReportDialog() {
 
         if (adapter.getItemCount() > 0) {
+            EntityWrapper<SpeedTest> speedTest = ViewModelProviders.of(this.getActivity()).get(SpeedViewModel.class).getSpeedTestData().getValue();
+
             SendReportDialog wifiInfoDialog = SendReportDialog.init(getContext(), rootView, adapter.getItems());
             wifiInfoDialog.show(getFragmentManager(), SendReportDialog.class.getName());
 
