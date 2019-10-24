@@ -113,8 +113,9 @@ public class WifiFragment extends Fragment {
 
     private void requestAccessCoarseLocationPermission() {
         String location = android.Manifest.permission.ACCESS_COARSE_LOCATION;
-        if (ActivityCompat.checkSelfPermission(getContext(), location) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[] { location }, 77);
+
+        if (getActivity().checkSelfPermission(location) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] { location }, 77);
         }
         else {
             scanWifi();
