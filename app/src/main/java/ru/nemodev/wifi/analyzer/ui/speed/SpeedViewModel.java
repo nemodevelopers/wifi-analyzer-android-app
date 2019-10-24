@@ -1,11 +1,12 @@
 package ru.nemodev.wifi.analyzer.ui.speed;
 
+import android.net.wifi.WifiInfo;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.github.pwittchen.reactivewifi.ReactiveWifi;
-import com.github.pwittchen.reactivewifi.WifiState;
 
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
@@ -25,25 +26,31 @@ public class SpeedViewModel extends ViewModel {
     private final static int SOCKET_TIMEOUT = 5000;
 
     private final MutableLiveData<EntityWrapper<SpeedTest>> speedTest;
-    private Disposable wifiStatusDisposable;
     private Disposable speedTestDisposable;
+
+    private final MutableLiveData<EntityWrapper<WifiInfo>> activeWifi;
+    private Disposable activeWifiDisposable;
 
     private SpeedTestSocket speedTestSocket;
 
     public SpeedViewModel() {
         speedTest = new MutableLiveData<>();
+        activeWifi = new MutableLiveData<>();
     }
 
     public LiveData<EntityWrapper<SpeedTest>> getSpeedTestData() {
+        return speedTest;
+    }
 
-        if (wifiStatusDisposable == null) {
-            wifiStatusDisposable = ReactiveWifi.observeWifiStateChange(AndroidApplication.getInstance())
-                    .filter(wifiState -> wifiState == WifiState.ENABLED || wifiState == WifiState.ENABLING)
+    public LiveData<EntityWrapper<WifiInfo>> getActiveWifi() {
+
+        if (activeWifiDisposable == null) {
+            activeWifiDisposable = ReactiveWifi.observeWifiAccessPointChanges(AndroidApplication.getInstance().getApplicationContext())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(wifiState -> testSpeed());
+                    .subscribe(wifiInfo -> activeWifi.postValue(EntityWrapper.of(wifiInfo)));
         }
 
-        return speedTest;
+        return activeWifi;
     }
 
     public void testSpeed() {
@@ -67,7 +74,7 @@ public class SpeedViewModel extends ViewModel {
 
             @Override
             public void onError(final SpeedTestError speedTestError, final String errorMessage) {
-                speedTest.postValue(EntityWrapper.of("Ошибка тестирования скорости wifi сети!" +
+                speedTest.postValue(EntityWrapper.of("Ошибка теста скорости wifi сети!" +
                         "\nПроверьте подключение к сети wifi!"));
             }
 
@@ -83,7 +90,7 @@ public class SpeedViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe(isStart -> {},
                         exception -> {
-                            speedTest.setValue(EntityWrapper.of("Ошибка тестирования скорости wifi сети!" +
+                            speedTest.setValue(EntityWrapper.of("Ошибка теста скорости wifi сети!" +
                                     "\nПроверьте подключение к сети wifi!"));
                         });
 
@@ -96,8 +103,8 @@ public class SpeedViewModel extends ViewModel {
         if (speedTestDisposable != null) {
             speedTestDisposable.dispose();
         }
-        if (wifiStatusDisposable != null) {
-            wifiStatusDisposable.dispose();
+        if (activeWifiDisposable != null) {
+            activeWifiDisposable.dispose();
         }
     }
 }

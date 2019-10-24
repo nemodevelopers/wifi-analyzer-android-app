@@ -1,36 +1,16 @@
 package ru.nemodev.wifi.analyzer.core.network.dto.wifi.info;
 
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import ru.nemodev.wifi.analyzer.core.network.dto.BaseEntityDto;
 import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiAnalyzeInfoDto extends BaseEntityDto {
 
-    @SerializedName("creationDate")
-    @Expose
     private String creationDate;
-
-    @SerializedName("ssid")
-    @Expose
     private String ssid;
-
-    @SerializedName("bssid")
-    @Expose
     private String bssid;
-
-    @SerializedName("rssi")
-    @Expose
     private Integer rssi;
-
-    @SerializedName("signalLevel")
-    @Expose
     private String signalLevel;
-
-    @SerializedName("frequency")
-    @Expose
     private Integer frequency;
 
     public WifiAnalyzeInfoDto() {

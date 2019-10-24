@@ -1,7 +1,5 @@
 package ru.nemodev.wifi.analyzer.core.network.dto.wifi.report;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +14,11 @@ import ru.nemodev.wifi.analyzer.core.wifi.WifiAnalyzeInfo;
 
 public class WifiAnalyzeReportDto extends BaseEntityDto {
 
-    @SerializedName("creationDate")
-    @Expose
     private String creationDate;
-
-    @SerializedName("comment")
-    @Expose
     private String comment;
-
-    @SerializedName("ownerUser")
-    @Expose
     private UserOwnerDto ownerUser;
-
-    @SerializedName("location")
-    @Expose
     private LocationDto location;
-
-    @SerializedName("deviceInfo")
-    @Expose
     private DeviceInfoDto deviceInfo;
-
-    @SerializedName("wifiAnalyzeInfos")
-    @Expose
     private List<WifiAnalyzeInfoDto> wifiAnalyzeInfos;
 
     public WifiAnalyzeReportDto() {

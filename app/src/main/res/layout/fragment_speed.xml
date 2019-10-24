@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,36 +15,94 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/title"
+            <RelativeLayout
+                android:id="@+id/active_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Анализ скорости wi-fi сети"
-                android:textSize="20sp" />
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/ssid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:text="Подключитесь к wifi сети для теста скорости!"
+                    android:textSize="22sp"/>
+                <TextView
+                    android:id="@+id/bssid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorGrey"
+                    android:textSize="16sp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_below="@id/ssid"/>
+                <TextView
+                    android:id="@+id/freq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorGrey"
+                    android:textSize="18sp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_below="@id/bssid"/>
+                <com.robertlevonyan.views.chip.Chip
+                    android:id="@+id/rssi_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bssid"
+                    android:layout_alignEnd="@id/freq"
+                    android:layout_alignParentEnd="true"
+                    app:mcv_textColor="@color/colorChipTextClicked"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/speed_test_result"
+            <RelativeLayout
+                android:id="@+id/speed_test_result_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textAlignment="center"
-                android:text=""
-                android:textSize="20sp" />
+                android:layout_below="@+id/active_wifi">
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:visibility="gone"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="0"
+                    android:indeterminate="false"/>
 
-            <Button
-                android:id="@+id/speed_test_btn"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/speed_test_result"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="70dp"
-                android:text="Тест скорости" />
+                <TextView
+                    android:id="@+id/speed_test_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progress"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/speed_test_action"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/active_wifi"
+                android:layout_gravity="bottom"
+                android:gravity="bottom">
+
+                <Button
+                    android:id="@+id/speed_test_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="70dp"
+                    android:text="Тест скорости"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

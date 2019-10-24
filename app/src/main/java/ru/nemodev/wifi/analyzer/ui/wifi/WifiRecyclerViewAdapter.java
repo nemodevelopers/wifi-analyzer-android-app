@@ -47,7 +47,6 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
         holder.ssid.setText(wifiAnalyzeInfo.getSSID());
         holder.bssid.setText(wifiAnalyzeInfo.getBSSID());
 
-
         String frequency = wifiAnalyzeInfo.getFrequency() < 4500 ? "2 GHz" : "5 GHz";
         holder.frequency.setText(frequency);
 

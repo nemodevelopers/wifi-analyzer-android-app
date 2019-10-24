@@ -1,32 +1,15 @@
 package ru.nemodev.wifi.analyzer.core.network.dto.device;
 
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import ru.nemodev.wifi.analyzer.core.device.DeviceInfo;
 import ru.nemodev.wifi.analyzer.core.network.dto.BaseEntityDto;
 
 public class DeviceInfoDto extends BaseEntityDto {
 
-    @SerializedName("device")
-    @Expose
     private String device;
-
-    @SerializedName("model")
-    @Expose
     private String model;
-
-    @SerializedName("versionOS")
-    @Expose
     private String versionOS;
-
-    @SerializedName("macAddress")
-    @Expose
     private String macAddress;
-
-    @SerializedName("ipAddress")
-    @Expose
     private String ipAddress;
 
     public DeviceInfoDto() {

@@ -1,20 +1,11 @@
 package ru.nemodev.wifi.analyzer.core.network.dto.user;
 
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import ru.nemodev.wifi.analyzer.core.network.dto.BaseEntityDto;
 
 public class UserDto extends BaseEntityDto {
 
-    @SerializedName("login")
-    @Expose
     private String login;
-
-
-    @SerializedName("password")
-    @Expose
     private String password;
 
     public UserDto() {
