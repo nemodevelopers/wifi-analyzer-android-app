@@ -7,10 +7,10 @@ import android.util.Range;
  */
 public enum RssiLevel {
 
-    EXCELLENT("#4CAF50"),
-    GOOD("#60974A" ),
-    NORMAL("#90A036"),
-    BAD("#A34A34");
+    EXCELLENT("#388E3C"),
+    GOOD("#AFB42B" ),
+    NORMAL("#FBC02D"),
+    BAD("#D84315");
 
     private String color;
 

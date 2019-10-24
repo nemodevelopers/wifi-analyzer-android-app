@@ -17,22 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+
 import ru.nemodev.wifi.analyzer.R;
-import ru.nemodev.wifi.analyzer.core.device.DeviceManager;
-import ru.nemodev.wifi.analyzer.core.network.api.report.WifiAnalyzeReportService;
-import ru.nemodev.wifi.analyzer.core.network.dto.wifi.report.WifiAnalyzeReportDto;
-import ru.nemodev.wifi.analyzer.core.report.ReportLocation;
-import ru.nemodev.wifi.analyzer.core.report.WifiAnalyzeReport;
+
+import ru.nemodev.wifi.analyzer.ui.report.SendReportDialog;
 import ru.nemodev.wifi.analyzer.utils.AndroidUtils;
 
 public class WifiFragment extends Fragment {
 
     private View rootView;
     @BindView(R.id.scan_btn) Button scanBtn;
-    @BindView(R.id.send_report_btn) Button sendReportBtn;
+    @BindView(R.id.open_report_dialog_btn) Button openDialogReportBtn;
 
     private ProgressDialog progressDialog;
     private WifiViewModel wifiViewModel;
@@ -48,7 +43,7 @@ public class WifiFragment extends Fragment {
         initProgressDialog();
 
         scanBtn.setOnClickListener(v -> scanWifi());
-        sendReportBtn.setOnClickListener(v -> sendWifiReport());
+        openDialogReportBtn.setOnClickListener(v -> openSendReportDialog());
 
         requestAccessCoarseLocationPermission();
 
@@ -91,41 +86,12 @@ public class WifiFragment extends Fragment {
         wifiViewModel.scanWifi();
     }
 
-    private void sendWifiReport() {
+    private void openSendReportDialog() {
 
         if (adapter.getItemCount() > 0) {
-            WifiAnalyzeReport report = new WifiAnalyzeReport();
+            SendReportDialog wifiInfoDialog = SendReportDialog.init(getContext(), rootView, adapter.getItems());
+            wifiInfoDialog.show(getFragmentManager(), SendReportDialog.class.getName());
 
-            report.setWifiAnalyzeInfoList(adapter.getItems());
-            report.setDeviceInfo(DeviceManager.getDeviceInfo());
-            report.setComment("test");
-            report.setLocation(new ReportLocation("1862950d-dae2-4084-94dc-76da15a6a6ad", "test"));
-
-            WifiAnalyzeReportService.getInstance().sendReport(report)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<WifiAnalyzeReportDto>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(WifiAnalyzeReportDto wifiAnalyzeReportDto) {
-                            AndroidUtils.showSnackBarMessageLong(rootView,
-                                    "Отчет успешно отправлен!");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            AndroidUtils.showSnackBarMessageLong(rootView,
-                                    "Произошла ошибка попробуйте отправить отчет позже!");
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
         } else {
             AndroidUtils.showSnackBarMessageLong(rootView, "В отчете нет данных о Wi-Fi сетях!");
         }

@@ -9,5 +9,7 @@
     <color name="textColorGrey">#474444</color>
 
     <color name="text">#4CAF50</color>
-    <color name="mainBackground">#E5E5E5</color>
+    <color name="mainBackground">#F0EFEF</color>
+
+    <color name="colorGreen">#077F7B</color>
 </resources>

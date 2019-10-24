@@ -6,24 +6,24 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ru.nemodev.wifi.analyzer.core.auth.AuthContext;
-import ru.nemodev.wifi.analyzer.core.entity.location.Location;
 import ru.nemodev.wifi.analyzer.core.network.api.location.LocationApiFactory;
 import ru.nemodev.wifi.analyzer.core.network.dto.location.LocationDto;
+import ru.nemodev.wifi.analyzer.core.report.ReportLocation;
 
 
 public class LocationService {
 
     public static final LocationService INSTANCE = new LocationService();
 
-    private List<Location> locationList;
+    private List<ReportLocation> locationList;
 
     public LocationService() { }
 
-    public Observable<List<Location>> getList() {
+    public Observable<List<ReportLocation>> getList() {
         if (locationList == null) {
             LocationApiFactory locationApiFactory = new LocationApiFactory(AuthContext.tokenDto.getAccess_token());
 
-            Observable<List<Location>> observable = locationApiFactory.createApi().getList()
+            Observable<List<ReportLocation>> observable = locationApiFactory.createApi().getList()
                     .map(LocationDto::toEntityList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
