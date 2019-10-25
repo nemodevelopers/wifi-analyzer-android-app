@@ -108,7 +108,7 @@ public class SpeedViewModel extends ViewModel {
 
             @Override
             public void onProgress(final float percent, final SpeedTestReport downloadReport) {
-                speedTest.postValue(EntityWrapper.of(new SpeedTest(activeWifi.getValue().getEntity(), downloadReport, true)));
+                speedTest.postValue(EntityWrapper.of(new SpeedTest(null, downloadReport, true)));
             }
         });
 
